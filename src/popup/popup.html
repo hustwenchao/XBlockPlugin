@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>X Reply Spam Blocker</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <header>
+    <h1>X 回复过滤器</h1>
+  </header>
+
+  <section class="row">
+    <label class="switch">
+      <input type="checkbox" id="enabled" />
+      <span>启用插件</span>
+    </label>
+  </section>
+
+  <section class="row">
+    <label class="switch">
+      <input type="checkbox" id="keywordEnabled" />
+      <span>启用关键词过滤</span>
+    </label>
+  </section>
+
+  <section class="row">
+    <label class="switch">
+      <input type="checkbox" id="llmEnabled" />
+      <span>启用 LLM 过滤</span>
+    </label>
+  </section>
+
+  <section class="stats-card" id="stats">
+    <div class="stat-item">
+      <div class="stat-num" id="statToday">0</div>
+      <div class="stat-label">今日屏蔽</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" id="stat7d">0</div>
+      <div class="stat-label">近 7 天</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" id="statTotal">0</div>
+      <div class="stat-label">总计</div>
+    </div>
+  </section>
+
+  <section class="row stat" id="stat">
+    <span id="statText">本页未折叠</span>
+  </section>
+
+  <footer>
+    <button id="openOptions" class="primary">打开完整设置</button>
+  </footer>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

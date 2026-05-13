@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>X Reply Spam Blocker — 设置</title>
+  <link rel="stylesheet" href="options.css" />
+</head>
+<body>
+<main>
+  <h1>X 回复过滤器设置</h1>
+
+  <section class="card">
+    <h2>基本</h2>
+    <label class="row">
+      <input type="checkbox" id="enabled" />
+      <span>启用插件</span>
+    </label>
+    <label class="row">
+      <span>折叠样式</span>
+      <select id="collapseMode">
+        <option value="fold">折叠（点击展开）</option>
+        <option value="hide">完全隐藏</option>
+      </select>
+    </label>
+    <label class="row">
+      <input type="checkbox" id="showReason" />
+      <span>显示折叠原因</span>
+    </label>
+  </section>
+
+  <section class="card">
+    <h2>关键词过滤</h2>
+    <label class="row">
+      <input type="checkbox" id="keywordEnabled" />
+      <span>启用</span>
+    </label>
+    <p class="hint">每行一个关键词，匹配方式为不区分大小写的子串包含。</p>
+    <textarea id="keywords" rows="10" placeholder="follow back&#10;加微信&#10;..."></textarea>
+  </section>
+
+  <section class="card">
+    <h2>LLM 过滤（OpenAI 兼容）</h2>
+    <label class="row">
+      <input type="checkbox" id="llmEnabled" />
+      <span>启用</span>
+    </label>
+    <p class="hint">支持 OpenAI、DeepSeek、通义千问、Ollama 等任何兼容 OpenAI <code>/v1/chat/completions</code> 的端点。API Key 仅保存在浏览器同步存储中，不会上传到任何第三方服务器。</p>
+
+    <label class="row col">
+      <span>Base URL</span>
+      <input type="text" id="llmBaseUrl" placeholder="https://api.openai.com/v1" />
+    </label>
+    <label class="row col">
+      <span>API Key</span>
+      <input type="password" id="llmApiKey" placeholder="sk-..." />
+    </label>
+    <label class="row col">
+      <span>Model</span>
+      <input type="text" id="llmModel" placeholder="gpt-4o-mini" />
+    </label>
+
+    <div class="row">
+      <button id="testBtn" class="secondary">测试连通性</button>
+      <span id="testResult" class="result"></span>
+    </div>
+  </section>
+
+  <section class="card actions">
+    <button id="saveBtn" class="primary">保存</button>
+    <span id="saveStatus" class="result"></span>
+  </section>
+</main>
+
+<script type="module" src="options.js"></script>
+</body>
+</html>

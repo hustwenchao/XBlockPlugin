@@ -1,0 +1,25 @@
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# Logs
+*.log
+npm-debug.log*
+
+# Local-only / personal config (never commit API keys, even though they live in
+# chrome.storage at runtime — this is belt-and-braces in case anyone exports
+# settings to a file).
+.env
+.env.*
+*.local
+secrets.json
+config.local.json
+
+# Build artifacts (none yet, but reserve for later bundling)
+dist/
+build/
+*.zip
+*.crx
