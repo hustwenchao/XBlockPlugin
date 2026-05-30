@@ -27,6 +27,62 @@ async function loadStats() {
   $("statTotal").textContent = total;
 }
 
+const LANG_NAMES = {
+  zh: "中文", en: "英语", ja: "日语", ko: "韩语", es: "西班牙语",
+  fr: "法语", de: "德语", ru: "俄语", ar: "阿拉伯语", pt: "葡萄牙语",
+  it: "意大利语", th: "泰语", vi: "越南语", id: "印尼语", tr: "土耳其语",
+  hi: "印地语", nl: "荷兰语", pl: "波兰语", uk: "乌克兰语", fa: "波斯语",
+  he: "希伯来语", sv: "瑞典语", da: "丹麦语", no: "挪威语", fi: "芬兰语",
+  cs: "捷克语", el: "希腊语", ro: "罗马尼亚语", hu: "匈牙利语", ms: "马来语",
+  bn: "孟加拉语", ta: "泰米尔语", ur: "乌尔都语", tl: "他加禄语"
+};
+const langLabel = code => LANG_NAMES[code] || code.toUpperCase();
+
+async function loadLangStats() {
+  const { xbsbLangStats = {} } = await chrome.storage.local.get("xbsbLangStats");
+
+  const totals = {};
+  let total = 0;
+  for (let i = 0; i < 7; i++) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const day = xbsbLangStats[todayKey(d)];
+    if (!day) continue;
+    for (const [k, v] of Object.entries(day.langs || {})) {
+      totals[k] = (totals[k] || 0) + v;
+      total += v;
+    }
+  }
+
+  $("langMeta").textContent = `${total} 条`;
+  const list = $("langList");
+  list.innerHTML = "";
+
+  if (total === 0) {
+    const empty = document.createElement("li");
+    empty.className = "lang-empty";
+    empty.textContent = "暂无被 X 翻译的非中英文帖子";
+    list.appendChild(empty);
+    return;
+  }
+
+  const top = Object.entries(totals).sort((a, b) => b[1] - a[1]).slice(0, 8);
+  const max = top[0][1];
+  for (const [code, count] of top) {
+    const row = document.createElement("li");
+    row.className = "lang-row";
+    row.innerHTML = `
+      <span class="lang-name"></span>
+      <span class="lang-bar"><span class="lang-fill"></span></span>
+      <span class="lang-count"></span>
+    `;
+    row.querySelector(".lang-name").textContent = langLabel(code);
+    row.querySelector(".lang-fill").style.width = `${(count / max) * 100}%`;
+    row.querySelector(".lang-count").textContent = count;
+    list.appendChild(row);
+  }
+}
+
 async function init() {
   const s = await getSettings();
   $("enabled").checked = s.enabled;
@@ -44,9 +100,12 @@ async function init() {
   });
 
   await loadStats();
+  await loadLangStats();
   // Refresh stats live while popup is open (e.g. user scrolls a tab in background).
   chrome.storage.onChanged.addListener((changes, area) => {
-    if (area === "local" && changes.xbsbStats) loadStats();
+    if (area !== "local") return;
+    if (changes.xbsbStats) loadStats();
+    if (changes.xbsbLangStats) loadLangStats();
   });
 
   // Show count of collapsed cells in the active tab.
