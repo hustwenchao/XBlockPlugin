@@ -30,7 +30,10 @@ export const DEFAULT_SETTINGS = {
   showReason: true,
 
   // Caching
-  cacheTtlMinutes: 60 * 24 // 24h
+  cacheTtlMinutes: 60 * 24, // 24h
+
+  // Theme
+  theme: "system" // "system" | "light" | "dark"
 };
 
 export async function getSettings() {

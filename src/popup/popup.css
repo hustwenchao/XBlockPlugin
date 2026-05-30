@@ -1,15 +1,57 @@
+:root {
+  --bg-body: #fff;
+  --bg-stats: rgba(29, 155, 240, 0.08);
+  --text-main: #0f1419;
+  --text-secondary: rgba(15, 20, 25, 0.7);
+  --border: rgba(127, 127, 127, 0.2);
+  --primary: #1d9bf0;
+  --primary-hover: #1a8cd8;
+  --accent: #1d9bf0;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-body: #15202b;
+    --bg-stats: rgba(29, 155, 240, 0.15);
+    --text-main: #e7e9ea;
+    --text-secondary: rgba(231, 233, 234, 0.7);
+    --border: rgba(255, 255, 255, 0.15);
+    --primary: #1d9bf0;
+    --primary-hover: #1a8cd8;
+    --accent: #1d9bf0;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg-body: #15202b;
+  --bg-stats: rgba(29, 155, 240, 0.15);
+  --text-main: #e7e9ea;
+  --text-secondary: rgba(231, 233, 234, 0.7);
+  --border: rgba(255, 255, 255, 0.15);
+  --primary: #1d9bf0;
+  --primary-hover: #1a8cd8;
+  --accent: #1d9bf0;
+}
+
+:root[data-theme="light"] {
+  --bg-body: #fff;
+  --bg-stats: rgba(29, 155, 240, 0.08);
+  --text-main: #0f1419;
+  --text-secondary: rgba(15, 20, 25, 0.7);
+  --border: rgba(127, 127, 127, 0.2);
+  --primary: #1d9bf0;
+  --primary-hover: #1a8cd8;
+  --accent: #1d9bf0;
+}
+
 body {
   width: 280px;
   margin: 0;
   padding: 12px 14px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 13px;
-  color: #0f1419;
-  background: #fff;
-}
-@media (prefers-color-scheme: dark) {
-  body { background: #15202b; color: #e7e9ea; }
-  footer button { background: #1d9bf0; }
+  color: var(--text-main);
+  background: var(--bg-body);
 }
 
 h1 {
@@ -39,17 +81,17 @@ h1 {
   gap: 6px;
   margin: 10px 0 4px;
   padding: 10px 6px;
-  background: rgba(29, 155, 240, 0.08);
+  background: var(--bg-stats);
   border-radius: 10px;
 }
 .stat-item { flex: 1; text-align: center; }
-.stat-num { font-size: 18px; font-weight: 700; color: #1d9bf0; line-height: 1.2; }
-.stat-label { font-size: 11px; opacity: 0.7; margin-top: 2px; }
+.stat-num { font-size: 18px; font-weight: 700; color: var(--accent); line-height: 1.2; }
+.stat-label { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
 
 .stat {
   font-size: 12px;
-  opacity: 0.7;
-  border-top: 1px solid rgba(127,127,127,0.2);
+  color: var(--text-secondary);
+  border-top: 1px solid var(--border);
   padding-top: 8px;
   margin-top: 4px;
 }
@@ -97,9 +139,9 @@ button.primary {
   padding: 8px;
   border: none;
   border-radius: 999px;
-  background: #1d9bf0;
+  background: var(--primary);
   color: white;
   font-weight: 600;
   cursor: pointer;
 }
-button.primary:hover { background: #1a8cd8; }
+button.primary:hover { background: var(--primary-hover); }

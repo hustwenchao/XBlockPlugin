@@ -83,8 +83,18 @@ async function loadLangStats() {
   }
 }
 
+function applyTheme(theme) {
+  const root = document.documentElement;
+  if (theme === "system") {
+    delete root.dataset.theme;
+  } else {
+    root.dataset.theme = theme;
+  }
+}
+
 async function init() {
   const s = await getSettings();
+  applyTheme(s.theme || "system");
   $("enabled").checked = s.enabled;
   $("keywordEnabled").checked = s.keywordEnabled;
   $("llmEnabled").checked = s.llmEnabled;

@@ -4,8 +4,17 @@ const $ = id => document.getElementById(id);
 
 const FIELDS = [
   "enabled", "keywordEnabled", "llmEnabled", "showReason",
-  "collapseMode", "llmBaseUrl", "llmApiKey", "llmModel"
+  "collapseMode", "llmBaseUrl", "llmApiKey", "llmModel", "theme"
 ];
+
+function applyTheme(theme) {
+  const root = document.documentElement;
+  if (theme === "system") {
+    delete root.dataset.theme;
+  } else {
+    root.dataset.theme = theme;
+  }
+}
 
 async function load() {
   const s = await getSettings();
@@ -14,6 +23,8 @@ async function load() {
   $("llmEnabled").checked = s.llmEnabled;
   $("showReason").checked = s.showReason;
   $("collapseMode").value = s.collapseMode;
+  $("theme").value = s.theme || "system";
+  applyTheme($("theme").value);
   $("llmBaseUrl").value = s.llmBaseUrl;
   $("llmApiKey").value = s.llmApiKey;
   $("llmModel").value = s.llmModel;
@@ -32,6 +43,7 @@ async function save() {
     llmEnabled: $("llmEnabled").checked,
     showReason: $("showReason").checked,
     collapseMode: $("collapseMode").value,
+    theme: $("theme").value,
     llmBaseUrl: $("llmBaseUrl").value.trim() || DEFAULT_SETTINGS.llmBaseUrl,
     llmApiKey: $("llmApiKey").value.trim(),
     llmModel: $("llmModel").value.trim() || DEFAULT_SETTINGS.llmModel,
@@ -69,5 +81,6 @@ async function testLLM() {
 
 $("saveBtn").addEventListener("click", save);
 $("testBtn").addEventListener("click", testLLM);
+$("theme").addEventListener("change", e => applyTheme(e.target.value));
 
 load();
