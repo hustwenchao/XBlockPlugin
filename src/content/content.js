@@ -77,16 +77,21 @@
     return m ? m[1] : null;
   }
 
+  // Normalize text so emojis with/without variation selectors match.
+  function normalizeText(str) {
+    return String(str || "").normalize("NFC").replace(/[\uFE0E\uFE0F]/g, "");
+  }
+
   // ---------- Keyword filter ----------
   function checkKeyword({ text, displayName, handle }) {
     if (!settings.keywordEnabled) return null;
     const haystacks = [
-      { label: "正文", value: text },
-      { label: "昵称", value: displayName },
-      { label: "用户名", value: handle }
+      { label: "正文", value: normalizeText(text) },
+      { label: "昵称", value: normalizeText(displayName) },
+      { label: "用户名", value: normalizeText(handle) }
     ];
     for (const kw of settings.keywords) {
-      const k = String(kw || "").trim();
+      const k = normalizeText(kw).trim();
       if (!k) continue;
       const lk = k.toLowerCase();
       for (const { label, value } of haystacks) {
